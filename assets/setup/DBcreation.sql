@@ -1,10 +1,10 @@
 
 --
--- Database: `klik_loginsystem`
+-- Database: `kycdefiwallet`
 --
 
-create schema klik_loginsystem;
-use klik_loginsystem;
+create schema kycdefiwallet;
+use kycdefiwallet;
 
 -- --------------------------------------------------------
 
