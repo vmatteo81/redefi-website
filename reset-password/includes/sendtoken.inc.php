@@ -46,12 +46,11 @@ if (isset($_POST['resentsend'])) {
 
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
-    $url = "localhost/loginsystem/reset-password/?selector=" . $selector . "&validator=" . bin2hex($token);
+    $url = "localhost/reset-password/?selector=" . $selector . "&validator=" . bin2hex($token);
     $expires = 'DATE_ADD(NOW(), INTERVAL 1 HOUR)';
 
     $email = $_POST['email'];
-
-    $sql = "SELECT id FROM users WHERE email=?;";
+    $sql = "SELECT id,antiphishing FROM users WHERE email=?;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)){
 
@@ -63,13 +62,15 @@ if (isset($_POST['resentsend'])) {
 
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
-        mysqli_stmt_store_result($stmt);
-
-        if (mysqli_stmt_num_rows($stmt) == 0){
+        $result = mysqli_stmt_get_result($stmt);   
+        if (!$row = mysqli_fetch_assoc($result)) {
 
             $_SESSION['ERRORS']['emailerror'] = 'given email does not exist in our records';
             header("Location: ../");
             exit();
+        }
+        else{
+            $antiphishing =  $row['antiphishing'];
         }
     }
 
@@ -123,6 +124,7 @@ if (isset($_POST['resentsend'])) {
     $mail_variables['APP_NAME'] = APP_NAME;
     $mail_variables['email'] = $email;
     $mail_variables['url'] = $url;
+    $mail_variables['antiphishing'] = $antiphishing;
 
     $message = file_get_contents("./template_passwordresetemail.php");
 

@@ -60,7 +60,7 @@ else {
         * -------------------------------------------------------------------------------
         */
 
-        $sql = "UPDATE users SET last_login_at=NOW() WHERE username=?;";
+        $sql = "UPDATE users SET last_login_at=NOW() WHERE username=? or email=? ;";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
@@ -70,7 +70,7 @@ else {
         }
         else {
 
-            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_bind_param($stmt, "ss", $username,$username);
             mysqli_stmt_execute($stmt);
         }
 
@@ -82,7 +82,7 @@ else {
         * -------------------------------------------------------------------------------
         */
 
-        $sql = "SELECT * FROM users WHERE username=?;";
+        $sql = "SELECT * FROM users WHERE username=? or email =?;";
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -93,7 +93,7 @@ else {
         } 
         else {
 
-            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_bind_param($stmt, "ss", $username,$username);
             mysqli_stmt_execute($stmt);
 
             $result = mysqli_stmt_get_result($stmt);

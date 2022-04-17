@@ -49,6 +49,8 @@ if (isset($_POST['signupsubmit'])) {
     
     $username = input_filter($_POST['username']);
     $email = input_filter($_POST['email']);
+    $rand = rand(1, 1000);
+    $antiphishing =  substr("0000{$rand}", -4);
     $password = input_filter($_POST['password']);
     $passwordRepeat  = input_filter($_POST['confirmpassword']);
     $headline = input_filter($_POST['headline']);
@@ -68,7 +70,7 @@ if (isset($_POST['signupsubmit'])) {
     * -------------------------------------------------------------------------------
     */
 
-    if (empty($username) || empty($email) || empty($password) || empty($passwordRepeat)) {
+    if (empty($username) || empty($email) || empty($password) || empty($passwordRepeat) || empty($antiphishing)) {
 
         $_SESSION['ERRORS']['formerror'] = 'required fields cannot be empty, try again';
         header("Location: ../");
@@ -83,7 +85,8 @@ if (isset($_POST['signupsubmit'])) {
         $_SESSION['ERRORS']['emailerror'] = 'invalid email';
         header("Location: ../");
         exit();
-    } else if ($password !== $passwordRepeat) {
+    } 
+    else if ($password !== $passwordRepeat) {
 
         $_SESSION['ERRORS']['passworderror'] = 'passwords donot match';
         header("Location: ../");
@@ -164,9 +167,12 @@ if (isset($_POST['signupsubmit'])) {
         * -------------------------------------------------------------------------------
         */
 
-        $sql = "insert into users(username, email, password, first_name, last_name, gender, 
-                headline, bio, profile_image, created_at) 
-                values ( ?,?,?,?,?,?,?,?,?, NOW() )";
+        $sql = "insert into users(username, email, password,antiphishing, first_name, 
+                                    last_name, gender, headline, bio, profile_image,
+                                     created_at) 
+                values ( ?,?,?,?,?,
+                         ?,?,?,?,?,
+                         NOW() )";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
 
@@ -178,7 +184,7 @@ if (isset($_POST['signupsubmit'])) {
 
             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
-            mysqli_stmt_bind_param($stmt, "sssssssss", $username, $email, $hashedPwd, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
+            mysqli_stmt_bind_param($stmt, "ssssssssss", $username, $email, $hashedPwd, $antiphishing, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
 

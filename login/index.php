@@ -34,7 +34,7 @@ check_logged_out();
 
                 <div class="form-group">
                     <label for="username" class="sr-only">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username or Email" required autofocus>
                     <sub class="text-danger">
                         <?php
                             if (isset($_SESSION['ERRORS']['nouser']))

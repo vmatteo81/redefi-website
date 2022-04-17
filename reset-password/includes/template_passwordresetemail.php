@@ -135,14 +135,14 @@
                 </tr>
                 <tr>
                     <td align="center" style="color: #343434; font-size: 24px; font-family: Quicksand, Calibri, sans-serif; font-weight:700;letter-spacing: 3px; line-height: 35px;"
-                        class="main-header">
-
-
+                        class="main-header">                
                         <div style="line-height: 35px">
-
-                            <span style="color: #5caad2;">{{ APP_NAME }}:</span> Reset Your Password
-
+                            <span style="color: #5caad2;">{{ APP_NAME }}:</span> Reset Your Password<br><br>
                         </div>
+                        
+                        <div style="line-height: 25px">
+                            <span style="color: #FF5733;">Antiphising Code: {{ antiphishing }}</span><br><span  style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">(This will be the same for all emails we send to you)</span>
+                        </div>     
                     </td>
                 </tr>
 
