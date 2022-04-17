@@ -23,7 +23,7 @@ else
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);   
             if (!$row = mysqli_fetch_assoc($result)) {
-                echo ("mail_config error on db");
+                echo ("mail_config missing on db");
             }
             else {
                 define('MAIL_HOST', $row['host']);
