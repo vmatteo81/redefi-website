@@ -4,6 +4,7 @@ if (!defined('APP_NAME'))                       define('APP_NAME', 'KycDefiWalle
 if (!defined('APP_ORGANIZATION'))               define('APP_ORGANIZATION', 'DefiAuthority');
 if (!defined('APP_OWNER'))                      define('APP_OWNER', 'vmatteo81');
 if (!defined('APP_DESCRIPTION'))                define('APP_DESCRIPTION', 'add Kyc to defi wallet');
+if (!defined('APP_WEBSITE'))                    define('APP_WEBSITE', '20.113.26.252/kycdefiwallet');
 
 if (!defined('ALLOWED_INACTIVITY_TIME'))        define('ALLOWED_INACTIVITY_TIME', time()+1*60);
 
