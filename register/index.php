@@ -92,51 +92,11 @@ check_logged_out();
                     </sub>
                 </div>
 
-                <hr>
-                <span class="h5 mb-3 font-weight-normal text-muted text-center">Optional</span>
-                <br><br>
-
-                <div class="form-group">
-                    <label for="first_name" class="sr-only">First Name</label>
-                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name">
-                </div>
-
-                <div class="form-group">
-                    <label for="last_name" class="sr-only">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name">
-                </div>
-
-                <div class="form-group mt-4">
-                    <label for="headline" class="sr-only">Headline</label>
-                    <input type="text" id="headline" name="headline" class="form-control" placeholder="headline">
-                </div>
-
-                <div class="form-group">
-                    <label for="bio" class="sr-only">Profile Details</label>
-                    <textarea type="text" id="bio" name="bio" class="form-control" placeholder="Tell us about yourself..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Gender</label>
-
-                    <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="male" name="gender" class="custom-control-input" value="m">
-                        <label class="custom-control-label" for="male">Male</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="female" name="gender" class="custom-control-input" value="f">
-                        <label class="custom-control-label" for="female">Female</label>
-                    </div>
-                </div>
-
                 <button class="btn btn-lg btn-primary btn-block" type="submit" name='signupsubmit'>Signup</button>
 
                 <p class="mt-4 mb-3 text-muted text-center">
-                    <a href="https://github.com/msaad1999/PHP-Login-System" target="_blank">
-                        Login System
-                    </a> | 
-                    <a href="https://github.com/msaad1999/PHP-Login-System/blob/master/LICENSE" target="_blank">
-                        MIT License
+                    <a href="http://<?php echo APP_WEBSITE ?>/" target="_blank">
+                      <?php echo APP_NAME ?>
                     </a>
                 </p>
 

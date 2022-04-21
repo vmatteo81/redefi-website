@@ -58,11 +58,11 @@
                         <?php } else { ?>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="../dashboard">Dashboard</a>
+                                <a class="nav-link" href="../wallet">Wallet</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="../home">Home</a>
+                                <a class="nav-link" href="../profile-edit">Edit Profile</a>
                             </li>
 
                             <li class="nav-item">
@@ -76,17 +76,11 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="imgdropdown">
                                     <a class="dropdown-item text-muted" href="../profile"><i class="fa fa-user pr-2"></i> Profile</a>
-                                    <a class="dropdown-item text-muted" href="../profile-edit"><i class="fa fa-pencil-alt pr-2"></i> Edit Profile</a>
                                     <a class="dropdown-item text-muted" href="../logout"><i class="fa fa-running pr-2"></i> Logout</a>
                                 </div>
                             </div>
 
                         <?php } ?>
-
-
-
-
-
                     </ul>
                 </div>
             </div>

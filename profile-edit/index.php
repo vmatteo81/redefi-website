@@ -2,6 +2,7 @@
 
 define('TITLE', "Edit Profile");
 include '../assets/layouts/header.php';
+include './includes/nationality.php';
 check_verified();
 
 //XSS filter for session variables
@@ -17,19 +18,11 @@ function xss_filter($data) {
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-
-            <?php include('../assets/layouts/profile-card.php'); ?>
-
-        </div>
-        <div class="col-md-1">
-
-        </div>
         <div class="col-lg-7">
             <form class="form-auth" action="includes/profile-edit.inc.php" method="post" enctype="multipart/form-data" autocomplete="off">
 
                 <?php insert_csrf_token(); ?>
-
+                <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">Edit Your Profile</h6>    
                 <div class="picCard text-center">
                     <div class="avatar-upload">
                         <div class="avatar-preview text-center">
@@ -61,32 +54,6 @@ function xss_filter($data) {
                     </small>
                 </div>
 
-                <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">Edit Your Profile</h6>
-
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="<?php echo xss_filter($_SESSION['username']); ?>" autocomplete="off">
-                    <sub class="text-danger">
-                        <?php
-                            if (isset($_SESSION['ERRORS']['usernameerror']))
-                                echo $_SESSION['ERRORS']['usernameerror'];
-
-                        ?>
-                    </sub>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Email address" value="<?php echo xss_filter($_SESSION['email']); ?>">
-                    <sub class="text-danger">
-                        <?php
-                            if (isset($_SESSION['ERRORS']['emailerror']))
-                                echo $_SESSION['ERRORS']['emailerror'];
-
-                        ?>
-                    </sub>
-                </div>
-
                 <div class="form-group">
                     <label for="first_name">First Name</label>
                     <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" value="<?php echo xss_filter($_SESSION['first_name']); ?>">
@@ -98,8 +65,13 @@ function xss_filter($data) {
                 </div>
 
                 <div class="form-group mt-4">
-                    <label for="headline">Headline</label>
-                    <input type="text" id="headline" name="headline" class="form-control" placeholder="headline" value="<?php echo xss_filter($_SESSION['headline']); ?>">
+                    <label for="birthday">Date of Birth</label>
+                    <input type="date" id="birthday" name="birthday" class="form-control" placeholder="birthday" value="<?php echo xss_filter($_SESSION['birthday']); ?>">
+                </div>
+
+                <div class="form-group mt-4">
+                    <label for="nationality">Nationality</label>
+                    <?php show_nationality(); ?>
                 </div>
 
                 <div class="form-group">
