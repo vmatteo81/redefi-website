@@ -101,7 +101,7 @@ if (isset($_POST['verifysubmit'])) {
     $mail_variables['APP_NAME'] = APP_NAME;
     $mail_variables['email'] = $email;
     $mail_variables['url'] = $url;
-    $mail_variables['antiphishing'] = $antiphishing;
+    $mail_variables['antiphishing'] = $_SESSION['antiphishing'];;
 
     $message = file_get_contents("./template_verificationemail.php");
 
