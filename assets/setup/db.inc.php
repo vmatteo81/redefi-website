@@ -13,7 +13,7 @@ else
 {
     if (!defined('MAIL_HOST'))
     {
-        $sql = "select host,username,password,encryption,port from mail_config;";
+        $sql = "select mail_host,mail_username,mail_password,mail_encryption,mail_port from mail_config;";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
     
@@ -26,11 +26,11 @@ else
                 echo ("mail_config missing on db");
             }
             else {
-                define('MAIL_HOST', $row['host']);
-                define('MAIL_USERNAME', $row['username']);
-                define('MAIL_PASSWORD', $row['password']);
-                define('MAIL_ENCRYPTION', $row['encryption']);
-                define('MAIL_PORT', $row['port']);        
+                define('MAIL_HOST', $row['mail_host']);
+                define('MAIL_USERNAME', $row['mail_username']);
+                define('MAIL_PASSWORD', $row['mail_password']);
+                define('MAIL_ENCRYPTION', $row['mail_encryption']);
+                define('MAIL_PORT', $row['mail_port']);        
             }
         }
     }     

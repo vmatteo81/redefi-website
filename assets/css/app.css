@@ -61,12 +61,14 @@ body {
     margin-bottom: 0;
     border-radius: 100%;
     z-index: 1000000;
-    background: blue;
+    background: darkblue;
     border: 1px solid transparent;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
     cursor: pointer;
     font-weight: normal;
     transition: all 0.2s ease-in-out;
+    font-size: 1.45em;
+    color:white;
 }
 
 .avatar-upload .avatar-edit input+label:hover {
@@ -264,4 +266,12 @@ footer {
     margin: 0 auto;
     margin-top: 10px;
     line-height: 25px;
+}
+
+#nationality{
+    height: auto;
+}
+.red-label{
+  color:red;
+  font-weight: bold;
 }

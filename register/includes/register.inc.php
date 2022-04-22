@@ -49,26 +49,11 @@ if (isset($_POST['signupsubmit'])) {
     
     $username = input_filter($_POST['username']);
     $email = input_filter($_POST['email']);
-    $rand = rand(1, 1000);
-    $antiphishing =  substr("0000{$rand}", -4);
+    $rand = rand(1, 999999);
+    $antiphishing =  substr("000000{$rand}", -6);
     $password = input_filter($_POST['password']);
     $passwordRepeat  = input_filter($_POST['confirmpassword']);
-    $headline = input_filter($_POST['headline']);
-    $bio = input_filter($_POST['bio']);
-    $full_name = input_filter($_POST['first_name']);
-    $last_name = input_filter($_POST['last_name']);
 
-    if (isset($_POST['gender'])) 
-        $gender = input_filter($_POST['gender']);
-    else
-        $gender = NULL;
-
-
-    /*
-    * -------------------------------------------------------------------------------
-    *   Data Validation
-    * -------------------------------------------------------------------------------
-    */
 
     if (empty($username) || empty($email) || empty($password) || empty($passwordRepeat) || empty($antiphishing)) {
 
@@ -167,11 +152,9 @@ if (isset($_POST['signupsubmit'])) {
         * -------------------------------------------------------------------------------
         */
 
-        $sql = "insert into users(username, email, password,antiphishing, first_name, 
-                                    last_name, gender, headline, bio, profile_image,
+        $sql = "insert into users(username, email, password,antiphishing,profile_image,
                                      created_at) 
                 values ( ?,?,?,?,?,
-                         ?,?,?,?,?,
                          NOW() )";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -184,7 +167,7 @@ if (isset($_POST['signupsubmit'])) {
 
             $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
 
-            mysqli_stmt_bind_param($stmt, "ssssssssss", $username, $email, $hashedPwd, $antiphishing, $full_name, $last_name, $gender, $headline, $bio, $FileNameNew);
+            mysqli_stmt_bind_param($stmt, "sssss", $username, $email, $hashedPwd, $antiphishing, $FileNameNew);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_store_result($stmt);
 

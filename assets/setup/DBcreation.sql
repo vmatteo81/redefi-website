@@ -8,6 +8,22 @@ use kycdefiwallet;
 
 -- --------------------------------------------------------
 
+
+
+--
+-- Table structure for table `auth_tokens`
+--
+
+CREATE TABLE `mail_config` (
+  `mail_host` varchar(255) NOT NULL,
+  `mail_username` varchar(255) NOT NULL,
+  `mail_password` varchar(255) NOT NULL,
+  `mail_encryption` varchar(255) NOT NULL,
+  `mail_port` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ALTER TABLE `mail_config`
+  ADD PRIMARY KEY (`mail_host`),
+  ADD UNIQUE KEY `mail_host` (`mail_host`);
 --
 -- Table structure for table `auth_tokens`
 --
@@ -32,31 +48,27 @@ CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `antiphishing` varchar(4) NOT NULL,
+  `antiphishing` varchar(6) NOT NULL,
   `password` varchar(255) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
-  `gender` char(1) DEFAULT NULL,
-  `headline` varchar(255) DEFAULT NULL,
-  `bio` text DEFAULT NULL,
+  `birthday` varchar(255) DEFAULT NULL,
+  `nationality` varchar(255) DEFAULT NULL,
+  `id_doc_image` varchar(255) NOT NULL DEFAULT '_defaultUser.png',
+  `proof_addr_image` varchar(255) NOT NULL DEFAULT '_defaultUser.png',
+  `kyc_video` varchar(255) NOT NULL DEFAULT '_defaultUser.png',
+  `kyc_expires_at` timestamp NULL DEFAULT NULL,
   `profile_image` varchar(255) NOT NULL DEFAULT '_defaultUser.png',
   `verified_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL,
   `last_login_at` timestamp NULL DEFAULT NULL
+
+
+           
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`username`, `email`, `password`, `first_name`, `last_name`, `gender`, `headline`, `bio`, `created_at`) VALUES
-('supahot', 'supa@hot.com', '$2y$10$jhIOk4NVdBile/NwhAU9We/f0aoohx.cG9CizmIALRz0aCKJa5s6a', 'Supahot', 'Soverysupahot', 'm', 'Headline of a supa hot user', 'This is the bio of a supa hot user. Now i will say needless stuff to make this longer so this looks like a bio and not anything other than a bio.', NOW());
-
---
--- Indexes for table `auth_tokens`
---
 
 ALTER TABLE `auth_tokens`
   ADD PRIMARY KEY (`id`),

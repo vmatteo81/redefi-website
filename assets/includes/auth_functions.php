@@ -100,15 +100,33 @@ function force_login($email) {
                 $_SESSION['auth'] = 'loggedin';
             }
 
+            if($row['kyc_expires_at'] != NULL){
+                if ($row['kyc_expires_at'] < NOW())
+                {
+                    $_SESSION['kyc'] = 'expired';
+                }    
+                else
+                {   
+                    $_SESSION['kyc'] = 'ok';
+                }
+            } else{
+
+                $_SESSION['kyc'] = 'nok';
+            }
+
             $_SESSION['id'] = $row['id'];
             $_SESSION['username'] = $row['username'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['antiphishing'] = $row['antiphishing'];
             $_SESSION['first_name'] = $row['first_name'];
             $_SESSION['last_name'] = $row['last_name'];
-            $_SESSION['gender'] = $row['gender'];
-            $_SESSION['headline'] = $row['headline'];
-            $_SESSION['bio'] = $row['bio'];
+            $_SESSION['birthday'] = $row['birthday'];
+            $_SESSION['nationality'] = $row['nationality'];
+            $_SESSION['id_doc_image'] = $row['id_doc_image'];
+            $_SESSION['proof_addr_image'] = $row['proof_addr_image'];
+            $_SESSION['kyc_video'] = $row['kyc_video'];
+            $_SESSION['kyc_confirmed'] = $row['kyc_confirmed'];
+            
             $_SESSION['profile_image'] = $row['profile_image'];
             $_SESSION['banner_image'] = $row['banner_image'];
             $_SESSION['user_level'] = $row['user_level'];

@@ -31,7 +31,7 @@ function xss_filter($data) {
                         </div>
                         <div class="avatar-edit">
                             <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
-                            <label for="avatar"></label>
+                            <label for="avatar">+</label>
                         </div>
                     </div>
                 </div>
@@ -66,30 +66,113 @@ function xss_filter($data) {
 
                 <div class="form-group mt-4">
                     <label for="birthday">Date of Birth</label>
-                    <input type="date" id="birthday" name="birthday" class="form-control" placeholder="birthday" value="<?php echo xss_filter($_SESSION['birthday']); ?>">
+                    <input type="date" id="birthday" name="birthday" class="form-control" placeholder="Birthday" value="<?php echo xss_filter($_SESSION['birthday']); ?>">
                 </div>
 
                 <div class="form-group mt-4">
-                    <label for="nationality">Nationality</label>
-                    <?php show_nationality(); ?>
+                    <label for="nationality">Nationality</label><br>
+                    <?php echo nationalityDropdown(); ?>
                 </div>
 
-                <div class="form-group">
-                    <label for="bio">Profile Details</label>
-                    <textarea type="text" id="bio" name="bio" class="form-control" placeholder="Tell us about yourself..."><?php echo xss_filter($_SESSION['bio']); ?></textarea>
-                </div>
+                <div class="form-group mt-4">
+                    <label for="iddoc">ID Document Image(passport,driver license..)</label><br>
+                    <div class="picCard text-center">
+                        <div class="avatar-upload">
+                            <div class="avatar-preview text-center">
+                                <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['id_doc_image'] ?> );">
+                                </div>
+                            </div>
+                            <div class="avatar-edit">
+                                <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
+                                <label for="avatar">+</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <sub class="text-danger">
+                            <?php
+                                if (isset($_SESSION['ERRORS']['imageerror']))
+                                    echo $_SESSION['ERRORS']['imageerror'];
 
-                <div class="form-group mb-5">
-                    <label>Gender</label>
-                    <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="male" name="gender" class="custom-control-input" value="m" <?php if ($_SESSION['gender'] == 'm') echo 'checked' ?>>
-                        <label class="custom-control-label" for="male">Male</label>
+                            ?>
+                        </sub>
                     </div>
-                    <div class="custom-control custom-radio custom-control">
-                        <input type="radio" id="female" name="gender" class="custom-control-input" value="f" <?php if ($_SESSION['gender'] == 'f') echo 'checked' ?>>
-                        <label class="custom-control-label" for="female">Female</label>
+                    <div class="text-center">
+                        <small class="text-success font-weight-bold">
+                            <?php
+                                if (isset($_SESSION['STATUS']['editstatus']))
+                                    echo $_SESSION['STATUS']['editstatus'];
+                            ?>
+                        </small>
                     </div>
-                </div>
+                 </div>
+
+                 <div class="form-group mt-4">
+                   <label for="addrdoc">Proof of Addredd Image (gas bill,telephone bill...)</label><br>
+                    <div class="picCard text-center">
+                        <div class="avatar-upload">
+                            <div class="avatar-preview text-center">
+                                <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['proof_addr_image'] ?> );">
+                                </div>
+                            </div>
+                            <div class="avatar-edit">
+                                <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
+                                <label for="avatar">+</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <sub class="text-danger">
+                            <?php
+                                if (isset($_SESSION['ERRORS']['imageerror']))
+                                    echo $_SESSION['ERRORS']['imageerror'];
+
+                            ?>
+                        </sub>
+                    </div>
+                    <div class="text-center">
+                        <small class="text-success font-weight-bold">
+                            <?php
+                                if (isset($_SESSION['STATUS']['editstatus']))
+                                    echo $_SESSION['STATUS']['editstatus'];
+                            ?>
+                        </small>
+                    </div>
+                 </div>
+
+                 <div class="form-group mt-4">
+                   <label for="addrdoc">Upload a video of your face and a paper with antiphishing code</label> <label class="red-label"> <?php echo $_SESSION['antiphishing']?></label><br>
+                    <div class="picCard text-center">
+                        <div class="avatar-upload">
+                            <div class="avatar-preview text-center">
+                                <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['proof_addr_image'] ?> );">
+                                </div>
+                            </div>
+                            <div class="avatar-edit">
+                                <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
+                                <label for="avatar">+</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <sub class="text-danger">
+                            <?php
+                                if (isset($_SESSION['ERRORS']['imageerror']))
+                                    echo $_SESSION['ERRORS']['imageerror'];
+
+                            ?>
+                        </sub>
+                    </div>
+                    <div class="text-center">
+                        <small class="text-success font-weight-bold">
+                            <?php
+                                if (isset($_SESSION['STATUS']['editstatus']))
+                                    echo $_SESSION['STATUS']['editstatus'];
+                            ?>
+                        </small>
+                    </div>
+                 </div>
+                
 
                 <hr>
                     <span class="h5 font-weight-normal text-muted mb-4">Password Edit</span>
