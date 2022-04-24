@@ -12,6 +12,68 @@ require '../../assets/vendor/PHPMailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+function checkFileUploaded($filenew,$file,$imageerror,$allowed,$folder)
+{
+    if (!empty($file['name']))
+    {
+        $fileName = $file['name'];
+        $fileTmpName =$file['tmp_name'];
+        $fileSize = $file['size'];
+        $fileError = $file['error'];
+        $fileType = $file['type']; 
+
+        $fileExt = explode('.', $fileName);
+        $fileActualExt = strtolower(end($fileExt));
+        
+        if (in_array($fileActualExt, $allowed))
+        {
+            if ($fileError === 0)
+            {
+                if ($fileSize < 10000000)
+                {
+                    $filenew = uniqid('', true) . "." . $fileActualExt;
+                    $fileDestination = $folder.$filenew;
+                    move_uploaded_file($fileTmpName, $fileDestination);
+
+                    /*
+                    * -------------------------------------------------------------------------------
+                    *   Deleting old profile photo
+                    * -------------------------------------------------------------------------------
+                    */
+                    if ( $_SESSION['profile_image'] != "_defaultUser.png" ) {
+                        if (!unlink($folder . $_SESSION['profile_image'])) {  
+
+                            $_SESSION['ERRORS'][$imageerror] = 'old image could not be deleted';
+                            return false;
+                        } 
+                    }
+                }
+                else
+                {
+                    $_SESSION['ERRORS'][$imageerror] = 'image size should be less than 10MB';
+                    return false;
+                }
+            }
+            else
+            {
+                $_SESSION['ERRORS'][$imageerror] = 'image upload failed, try again';
+                return false;
+            }
+        }
+        else
+        {
+            $_SESSION['ERRORS'][$imageerror]= 'invalid image type, try again';
+            return false;
+        }
+    }
+    else
+    {
+        $imageerror = 'image is required';
+        return false;
+    }
+    return true;
+}
+
 if (isset($_POST['update-profile'])) {
 
     /*
@@ -42,266 +104,209 @@ if (isset($_POST['update-profile'])) {
     require '../../assets/setup/db.inc.php';
     require '../../assets/includes/datacheck.php';
 
-    $username = $_POST['username'];
-    $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
-    $headline = $_POST['headline'];
-    $bio = $_POST['bio'];
+    $birthday = $_POST['birthday'];
+    $nationality = $_POST['nationality'];
 
-    if (isset($_POST['gender'])) 
-        $gender = $_POST['gender'];
-    else
-        $gender = NULL;
-
-
-    $oldPassword = $_POST['password'];
-    $newpassword = $_POST['newpassword'];
-    $passwordrepeat  = $_POST['confirmpassword'];
-
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-        $_SESSION['ERRORS']['emailerror'] = 'invalid email, try again';
+    if (empty($first_name)) {
+        $_SESSION['ERRORS']['first_name'] = 'First Name field is required';
         header("Location: ../");
         exit();
     } 
-    if ($_SESSION['email'] != $email && !availableEmail($conn, $email)) {
-
-        $_SESSION['ERRORS']['emailerror'] = 'email already taken';
-        header("Location: ../");
-        exit();
-    }
-    if ( $_SESSION['username'] != $username && !availableUsername($conn, $username)) {
-
-        $_SESSION['ERRORS']['usernameerror'] = 'username already taken';
-        header("Location: ../");
-        exit();
-    }
     else {
+        $_SESSION['first_name'] =  $first_name;
+    }
+    if (empty($last_name)) {
+        $_SESSION['ERRORS']['last_name'] = 'Last Name field is required';
+        header("Location: ../");
+        exit();
+    } 
+    else {
+        $_SESSION['last_name'] =  $last_name;
+    }
+    if (empty($birthday)) {
+        $_SESSION['ERRORS']['birthday'] = 'Birthday field is required';
+        header("Location: ../");
+        exit();
+    } 
+    else {
+        $_SESSION['birthday'] =  $birthday;
+    }
+    if (empty($nationality)) {
+        $_SESSION['ERRORS']['nationality'] = 'Nationality field is required';
+        header("Location: ../");
+        exit();
+    } 
+    else {
+        $_SESSION['nationality'] =  $nationality;
+    }
 
-        /*
-        * -------------------------------------------------------------------------------
-        *   Image Upload
-        * -------------------------------------------------------------------------------
-        */
+    $fileNew = $_SESSION['id_doc_image'];
+    $file = $_FILES['idDocAvatar'];
+    $fileError = 'idDocError';
+    $allowed = array('jpg', 'jpeg', 'png', 'gif');
+    $folder ='../../imgUpload/idDoc/';
+    
+    if (checkFileUploaded($fileNew,$file,$fileError,$allowed,$folder) == false)
+    {
+        header("Location: ../");
+        exit();
+    }
 
-        $FileNameNew = $_SESSION['profile_image'];
-        $file = $_FILES['avatar'];
+    $fileNew = $_SESSION['proof_addr_image'];
+    $file = $_FILES['proAddrAvatar'];
+    $fileError =  'proAddrError';
+    $allowed = array('jpg', 'jpeg', 'png', 'gif');
+    $folder ='../../imgUpload/proAddr/';
+    
+    if (checkFileUploaded($fileNew,$file,$fileError,$allowed,$folder) == false)
+    {
+        header("Location: ../");
+        exit();
+    }
 
-        if (!empty($_FILES['avatar']['name']))
-        {
-            $fileName = $_FILES['avatar']['name'];
-            $fileTmpName = $_FILES['avatar']['tmp_name'];
-            $fileSize = $_FILES['avatar']['size'];
-            $fileError = $_FILES['avatar']['error'];
-            $fileType = $_FILES['avatar']['type']; 
+    $fileNew = $_SESSION['kyc_video'];
+    $file = $_FILES['videoAvatar'];
+    $fileError = 'videoError';
+    $allowed = array('mp4', 'mov', 'avi');
+    $folder ='../../imgUpload/video/';
+    
+    if (checkFileUploaded($fileNew,$file,$fileError,$allowed,$folder) == false)
+    {
+        header("Location: ../");
+        exit();
+    }
+    /*
+    * -------------------------------------------------------------------------------
+    *   User Updation
+    * -------------------------------------------------------------------------------
+    */
 
-            $fileExt = explode('.', $fileName);
-            $fileActualExt = strtolower(end($fileExt));
+    $sql = "UPDATE users 
+        SET username=?,
+        email=?, 
+        first_name=?, 
+        last_name=?, 
+        gender=?, 
+        headline=?, 
+        bio=?, 
+        profile_image=?";
 
-            $allowed = array('jpg', 'jpeg', 'png', 'gif');
-            if (in_array($fileActualExt, $allowed))
-            {
-                if ($fileError === 0)
-                {
-                    if ($fileSize < 10000000)
-                    {
-                        $FileNameNew = uniqid('', true) . "." . $fileActualExt;
-                        $fileDestination = '../../assets/uploads/users/' . $FileNameNew;
-                        move_uploaded_file($fileTmpName, $fileDestination);
+    if ($passwordUpdated){
 
-                        /*
-                        * -------------------------------------------------------------------------------
-                        *   Deleting old profile photo
-                        * -------------------------------------------------------------------------------
-                        */
-						if ( $_SESSION['profile_image'] != "_defaultUser.png" ) {
-							if (!unlink('../../assets/uploads/users/' . $_SESSION['profile_image'])) {  
+        $sql .= ", password=? 
+                WHERE id=?;";
+    }
+    else{
 
-								$_SESSION['ERRORS']['imageerror'] = 'old image could not be deleted';
-								header("Location: ../");
-								exit();
-							} 
-						}
-                    }
-                    else
-                    {
-                        $_SESSION['ERRORS']['imageerror'] = 'image size should be less than 10MB';
-                        header("Location: ../");
-                        exit(); 
-                    }
-                }
-                else
-                {
-                    $_SESSION['ERRORS']['imageerror'] = 'image upload failed, try again';
-                    header("Location: ../");
-                    exit();
-                }
-            }
-            else
-            {
-                $_SESSION['ERRORS']['imageerror'] = 'invalid image type, try again';
-                header("Location: ../");
-                exit();
-            }
-        }
+        $sql .= " WHERE id=?;";
+    }
 
+    $stmt = mysqli_stmt_init($conn);
 
-        /*
-        * -------------------------------------------------------------------------------
-        *   Password Updation
-        * -------------------------------------------------------------------------------
-        */
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-        if( !empty($oldPassword) || !empty($newpassword) || !empty($passwordRepeat)){
-
-            include 'password-edit.inc.php';
-        }
-        
-        if ($passwordUpdated) {
-
-            /*
-            * -------------------------------------------------------------------------------
-            *   Sending notification email on password update
-            * -------------------------------------------------------------------------------
-            */
-
-            $to = $_SESSION['email'];
-            $subject = 'Password Updated';
-            
-            /*
-            * -------------------------------------------------------------------------------
-            *   Using email template
-            * -------------------------------------------------------------------------------
-            */
-
-            $mail_variables = array();
-
-            $mail_variables['APP_NAME'] = APP_NAME;
-            $mail_variables['email'] = $_SESSION['email'];
-
-            $message = file_get_contents("./template_notificationemail.php");
-
-            foreach($mail_variables as $key => $value) {
-                
-                $message = str_replace('{{ '.$key.' }}', $value, $message);
-            }
-        
-            $mail = new PHPMailer(true);
-        
-            try {
-        
-                $mail->isSMTP();
-                $mail->Host = MAIL_HOST;
-                $mail->SMTPAuth = true;
-                $mail->Username = MAIL_USERNAME;
-                $mail->Password = MAIL_PASSWORD;
-                $mail->SMTPSecure = MAIL_ENCRYPTION;
-                $mail->Port = MAIL_PORT;
-        
-                $mail->setFrom(MAIL_USERNAME, APP_NAME);
-                $mail->addAddress($to, APP_NAME);
-        
-                $mail->isHTML(true);
-                $mail->Subject = $subject;
-                $mail->Body    = $message;
-        
-                $mail->send();
-            } 
-            catch (Exception $e) {
-        
-                
-            }
-        }
-
-
-        /*
-        * -------------------------------------------------------------------------------
-        *   User Updation
-        * -------------------------------------------------------------------------------
-        */
-
-        $sql = "UPDATE users 
-            SET username=?,
-            email=?, 
-            first_name=?, 
-            last_name=?, 
-            gender=?, 
-            headline=?, 
-            bio=?, 
-            profile_image=?";
+        $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
+        header("Location: ../");
+        exit();
+    } 
+    else {
 
         if ($passwordUpdated){
 
-            $sql .= ", password=? 
-                    WHERE id=?;";
+            $hashedPwd = password_hash($newpassword, PASSWORD_DEFAULT);
+            mysqli_stmt_bind_param($stmt, "ssssssssss", 
+                $username,
+                $email,
+                $first_name,
+                $last_name,
+                $gender,
+                $headline,
+                $bio,
+                $FileNameNew,
+                $hashedPwd,
+                $_SESSION['id']
+            );
         }
         else{
 
-            $sql .= " WHERE id=?;";
+            mysqli_stmt_bind_param($stmt, "sssssssss", 
+                $username,
+                $email,
+                $first_name,
+                $last_name,
+                $gender,
+                $headline,
+                $bio,
+                $FileNameNew,
+                $_SESSION['id']
+            );
         }
 
-        $stmt = mysqli_stmt_init($conn);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
 
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
 
-            $_SESSION['ERRORS']['scripterror'] = 'SQL ERROR';
-            header("Location: ../");
-            exit();
+        $_SESSION['username'] = $username;
+        $_SESSION['email'] = $email;
+        $_SESSION['first_name'] = $first_name;
+        $_SESSION['last_name'] = $last_name;
+        $_SESSION['gender'] = $gender;
+        $_SESSION['headline'] = $headline;
+        $_SESSION['bio'] = $bio;
+        $_SESSION['profile_image'] = $FileNameNew;
+
+        $_SESSION['STATUS']['editstatus'] = 'profile successfully updated';
+        
+        /*
+            * -------------------------------------------------------------------------------
+            *  Send Email for updated Kyc data
+            * -------------------------------------------------------------------------------
+        */
+        $to = $_SESSION['email'];
+        $subject = 'Kyc Updated';
+
+        $mail_variables = array();
+
+        $mail_variables['APP_NAME'] = APP_NAME;
+        $mail_variables['email'] = $_SESSION['email'];
+
+        $message = file_get_contents("./template_notificationemail.php");
+
+        foreach($mail_variables as $key => $value) {
+            
+            $message = str_replace('{{ '.$key.' }}', $value, $message);
+        }
+    
+        $mail = new PHPMailer(true);
+    
+        try {
+    
+            $mail->isSMTP();
+            $mail->Host = MAIL_HOST;
+            $mail->SMTPAuth = true;
+            $mail->Username = MAIL_USERNAME;
+            $mail->Password = MAIL_PASSWORD;
+            $mail->SMTPSecure = MAIL_ENCRYPTION;
+            $mail->Port = MAIL_PORT;
+    
+            $mail->setFrom(MAIL_USERNAME, APP_NAME);
+            $mail->addAddress($to, APP_NAME);
+    
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body    = $message;
+    
+            $mail->send();
         } 
-        else {
-
-            if ($passwordUpdated){
-
-                $hashedPwd = password_hash($newpassword, PASSWORD_DEFAULT);
-                mysqli_stmt_bind_param($stmt, "ssssssssss", 
-                    $username,
-                    $email,
-                    $first_name,
-                    $last_name,
-                    $gender,
-                    $headline,
-                    $bio,
-                    $FileNameNew,
-                    $hashedPwd,
-                    $_SESSION['id']
-                );
-            }
-            else{
-
-                mysqli_stmt_bind_param($stmt, "sssssssss", 
-                    $username,
-                    $email,
-                    $first_name,
-                    $last_name,
-                    $gender,
-                    $headline,
-                    $bio,
-                    $FileNameNew,
-                    $_SESSION['id']
-                );
-            }
-
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_store_result($stmt);
-
-
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
-            $_SESSION['first_name'] = $first_name;
-            $_SESSION['last_name'] = $last_name;
-            $_SESSION['gender'] = $gender;
-            $_SESSION['headline'] = $headline;
-            $_SESSION['bio'] = $bio;
-            $_SESSION['profile_image'] = $FileNameNew;
-
-            $_SESSION['STATUS']['editstatus'] = 'profile successfully updated';
-            header("Location: ../");
-            exit();
+        catch (Exception $e) {
+            
         }
-    }
 
+        header("Location: ../");
+        exit();
+    }
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 } 

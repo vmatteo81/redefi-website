@@ -121,21 +121,7 @@ else {
                         $_SESSION['auth'] = 'loggedin';
                     }
         
-                    if($row['kyc_expires_at'] != NULL){
-                        if ($row['kyc_expires_at'] < new DateTime('now'))
-                        {
-                            $_SESSION['kyc'] = 'expired';
-                            $_SESSION['kyc_message'] = 'expired';
-                        }    
-                        else
-                        {   
-                            $_SESSION['kyc'] = 'ok';
-                        }
-                    } else{
-        
-                        $_SESSION['kyc'] = 'nok';
-                    }
-        
+                            
                     $_SESSION['id'] = $row['id'];
                     $_SESSION['username'] = $row['username'];
                     $_SESSION['email'] = $row['email'];

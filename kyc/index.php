@@ -1,6 +1,6 @@
 <?php
 
-define('TITLE', "Edit Profile");
+define('TITLE', "My Kyc");
 include '../assets/layouts/header.php';
 include './includes/nationality.php';
 check_verified();
@@ -22,7 +22,7 @@ function xss_filter($data) {
             <form class="form-auth" action="includes/profile-edit.inc.php" method="post" enctype="multipart/form-data" autocomplete="off">
 
                 <?php insert_csrf_token(); ?>
-                <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">Edit Your Profile</h6>    
+                <h6 class="h3 mt-3 mb-3 font-weight-normal text-muted text-center">My Kyc</h6>    
 
                 <?php 
                     if ($_SESSION['kyc_message'] == "")
@@ -48,42 +48,70 @@ function xss_filter($data) {
                 <div class="form-group">
                     <label for="first_name">First Name</label>
                     <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" value="<?php echo xss_filter($_SESSION['first_name']); ?>">
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['first_name']))
+                                echo $_SESSION['ERRORS']['first_name'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group">
                     <label for="last_name">Last Name</label>
                     <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo xss_filter($_SESSION['last_name']); ?>">
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['last_name']))
+                                echo $_SESSION['ERRORS']['last_name'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group mt-4">
                     <label for="birthday">Date of Birth</label>
                     <input type="date" id="birthday" name="birthday" class="form-control" placeholder="Birthday" value="<?php echo xss_filter($_SESSION['birthday']); ?>">
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['birthday']))
+                                echo $_SESSION['ERRORS']['birthday'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group mt-4">
                     <label for="nationality">Nationality</label><br>
                     <?php echo nationalityDropdown(); ?>
+                    <sub class="text-danger">
+                        <?php
+                            if (isset($_SESSION['ERRORS']['nationality']))
+                                echo $_SESSION['ERRORS']['nationality'];
+
+                        ?>
+                    </sub>
                 </div>
 
                 <div class="form-group mt-4">
-                    <label for="iddoc">ID Document Image(passport,driver license..)</label><br>
+                    <label for="iddoc">Proof of Identity (passport,driver license..)</label><br>
                     <div class="picCard text-center">
                         <div class="avatar-upload">
                             <div class="avatar-preview text-center">
-                                <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['id_doc_image'] ?> );">
+                                <div id="idDocPreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['id_doc_image'] ?> );">
                                 </div>
                             </div>
                             <div class="avatar-edit">
-                                <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
-                                <label for="avatar">+</label>
+                                <input name='idDocAvatar' id="idDocAvatar" class="fas fa-pencil" type='file' />
+                                <label for="idDocAvatar">+</label>    
                             </div>
                         </div>
                     </div>
                     <div class="text-center">
                         <sub class="text-danger">
                             <?php
-                                if (isset($_SESSION['ERRORS']['imageerror']))
-                                    echo $_SESSION['ERRORS']['imageerror'];
+                                if (isset($_SESSION['ERRORS']['idDocError']))
+                                    echo $_SESSION['ERRORS']['idDocError'];
 
                             ?>
                         </sub>
@@ -99,24 +127,24 @@ function xss_filter($data) {
                  </div>
 
                  <div class="form-group mt-4">
-                   <label for="addrdoc">Proof of Addredd Image (gas bill,telephone bill...)</label><br>
+                   <label for="addrdoc">Proof of Address (gas bill,telephone bill...)</label><br>
                     <div class="picCard text-center">
                         <div class="avatar-upload">
                             <div class="avatar-preview text-center">
-                                <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['proof_addr_image'] ?> );">
+                                <div id="proAddrPreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['proof_addr_image'] ?> );">
                                 </div>
                             </div>
                             <div class="avatar-edit">
-                                <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
-                                <label for="avatar">+</label>
+                                <input name='proAddrAvatar' id="proAddrAvatar" class="fas fa-pencil" type='file' />
+                                <label for="proAddrAvatar">+</label>    
                             </div>
                         </div>
                     </div>
                     <div class="text-center">
                         <sub class="text-danger">
                             <?php
-                                if (isset($_SESSION['ERRORS']['imageerror']))
-                                    echo $_SESSION['ERRORS']['imageerror'];
+                                if (isset($_SESSION['ERRORS']['proAddrError']))
+                                    echo $_SESSION['ERRORS']['proAddrError'];
 
                             ?>
                         </sub>
@@ -136,20 +164,20 @@ function xss_filter($data) {
                     <div class="picCard text-center">
                         <div class="avatar-upload">
                             <div class="avatar-preview text-center">
-                                <div id="imagePreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['proof_addr_image'] ?> );">
+                                <div id="videoPreview" style="background-image: url( ../assets/uploads/users/<?php echo $_SESSION['proof_addr_image'] ?> );">
                                 </div>
                             </div>
                             <div class="avatar-edit">
-                                <input name='avatar' id="avatar" class="fas fa-pencil" type='file' />
-                                <label for="avatar">+</label>
+                                <input name='videoAvatar' id="videoAvatar" class="fas fa-pencil" type='file' />
+                                <label for="videoAvatar">+</label>    
                             </div>
                         </div>
                     </div>
                     <div class="text-center">
                         <sub class="text-danger">
                             <?php
-                                if (isset($_SESSION['ERRORS']['imageerror']))
-                                    echo $_SESSION['ERRORS']['imageerror'];
+                                if (isset($_SESSION['ERRORS']['videoError']))
+                                    echo $_SESSION['ERRORS']['videoError'];
 
                             ?>
                         </sub>
@@ -163,8 +191,7 @@ function xss_filter($data) {
                         </small>
                     </div>
                  </div>
-                 
-                 <button class="btn btn-lg btn-primary btn-block mb-5 <?php if ($_SESSION['kyc_message'] == "verified") {echo "disabled";} ?>" type="submit" name='update-profile'>Request Validation</button>
+                 <input class="btn btn-lg btn-primary btn-block mb-5 <?php if ($_SESSION['kyc_message'] == "verified") {echo "disabled";} ?>" type="submit" name='update-profile' value= 'Request Validation'/>
                 
             </form>
 
@@ -175,8 +202,6 @@ function xss_filter($data) {
     </div>
 </div>
 
-
-
 <?php
 
 include '../assets/layouts/footer.php';
@@ -184,22 +209,30 @@ include '../assets/layouts/footer.php';
 ?>
 
 <script type="text/javascript">
-    function readURL(input) {
+    function readURL(input,input2) {
 
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-                $('#imagePreview').hide();
-                $('#imagePreview').fadeIn(650);
+                input2.css('background-image', 'url(' + e.target.result + ')');
+                input2.hide();
+                input2.fadeIn(650);
 
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    $("#avatar").change(function() {
+    $("#idDocAvatar").change(function() {
         console.log("here");
-        readURL(this);
+        readURL(this,$('#idDocPreview'));
+    });
+    $("#proAddrAvatar").change(function() {
+        console.log("here");
+        readURL(this,$('#proAddrPreview'));
+    });
+    $("#videoAvatar").change(function() {
+        console.log("here");
+        readURL(this,$('#videoPreview'));
     });
 </script>
