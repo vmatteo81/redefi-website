@@ -125,8 +125,8 @@ function force_login($email) {
             $_SESSION['id_doc_image'] = $row['id_doc_image'];
             $_SESSION['proof_addr_image'] = $row['proof_addr_image'];
             $_SESSION['kyc_video'] = $row['kyc_video'];
-            $_SESSION['kyc_confirmed'] = $row['kyc_confirmed'];
-            
+            $_SESSION['kyc_expires_at'] = $row['kyc_expires_at'];
+            $_SESSION['kyc_message'] = $row['kyc_message'];
             $_SESSION['profile_image'] = $row['profile_image'];
             $_SESSION['banner_image'] = $row['banner_image'];
             $_SESSION['user_level'] = $row['user_level'];

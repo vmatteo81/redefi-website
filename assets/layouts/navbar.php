@@ -58,11 +58,11 @@
                         <?php } else { ?>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="../wallet">Wallet</a>
+                                <a class="nav-link" href="../kyc">My Kyc</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="../profile-edit">Edit Profile</a>
+                                <a class="nav-link" href="../wallets">My Wallets</a>
                             </li>
 
                             <li class="nav-item">

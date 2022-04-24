@@ -58,6 +58,7 @@ CREATE TABLE `users` (
   `proof_addr_image` varchar(255) NOT NULL DEFAULT '_defaultUser.png',
   `kyc_video` varchar(255) NOT NULL DEFAULT '_defaultUser.png',
   `kyc_expires_at` timestamp NULL DEFAULT NULL,
+  `kyc_message` varchar(255) NOT NULL DEFAULT,
   `profile_image` varchar(255) NOT NULL DEFAULT '_defaultUser.png',
   `verified_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -65,9 +66,23 @@ CREATE TABLE `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `last_login_at` timestamp NULL DEFAULT NULL
 
-
            
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `wallets` (
+  `wallet_address` varchar(255) NOT NULL,
+  `key_users_id`  int(11) UNSIGNED NOT NULL,
+  `status` int(11) UNSIGNED NOT NULL,
+  `status_desc` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `expires_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+ALTER TABLE `wallets`
+  ADD PRIMARY KEY (`wallet_address`),
+  ADD UNIQUE KEY `wallet_address` (`wallet_address`),
+  ADD UNIQUE KEY `id` (`wallet_address`,`key_users_id`);
 
 
 ALTER TABLE `auth_tokens`
