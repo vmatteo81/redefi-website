@@ -378,3 +378,94 @@ This project has been assigned the [MIT License](LICENSE), so go ahead and feel 
 Hey there, this was a small little side project, which was a great learning experience for me and influenced me to focus more on bigger, more complex frameworks. I have now moved on to Laravel development, and if you think you're adding too much to this or any other raw PHP system, it may be high time for you to move onto a better framework like Laravel as well.
 
 > As mentioned before, in case that you do actually appreciate this project or the effort put into it, you're probably too far away for me to demand a good cup of coffee, so for now, how about a star? And if you're feeling great, how about a contribution?
+
+
+Italiano
+webmailrinnovipagamentiarea clientiassistenza 24/7
+1292585@aruba.it
+LA BOTTEGA DEL CAFFE'
+
+ 
+  Vai all'Area Clienti
+PANNELLO DI CONTROLLO
+Dashboard
+Dominio
+Hosting Linux
+File Manager
+Strumenti e impostazioni
+Reset Spazio Web
+Scheduled task
+Statistiche
+HiSpeed Cache
+Sicurezza
+Applicazioni
+Database
+Servizi di posta
+Web Marketing
+Guida al Pannello di Controllo
+redefi.eu
+Gestione PHP
+Versione PHPPHP.INITest PHP mail
+Questo strumento consente di verificare che le operazioni di invio email (usando PHP script) a un indirizzo di posta valido risultino funzionanti.
+Inserisci un'email:
+Es. info@example.com
+
+PHPinfo()
+Questa sezione contiene alcune informazioni dettagliate sulla configurazione di PHP, utili per verificarne il funzionamento.
+Test per la funzione PHP mail()
+Invio email effettuato con successo!
+Di seguito il codice sorgente usato per l'invio dell'email:	
+<?php
+
+error_reporting(E_ALL);
+
+// Genera un boundary
+$mail_boundary = "=_NextPart_" . md5(uniqid(time()));
+
+$to = "vmatteo23@yahoo.it";
+$subject = "Testing e-mail";
+$sender = "postmaster@redefi.eu";
+
+
+$headers = "From: $sender\n";
+$headers .= "MIME-Version: 1.0\n";
+$headers .= "Content-Type: multipart/alternative;\n\tboundary=\"$mail_boundary\"\n";
+$headers .= "X-Mailer: PHP " . phpversion();
+ 
+// Corpi del messaggio nei due formati testo e HTML
+$text_msg = "messaggio in formato testo";
+$html_msg = "<b>messaggio</b> in formato <p><a href='http://www.aruba.it'>html</a><br><img src=\"http://hosting.aruba.it/image_top/top_01.gif\" border=\"0\"></p>";
+ 
+// Costruisci il corpo del messaggio da inviare
+$msg = "This is a multi-part message in MIME format.\n\n";
+$msg .= "--$mail_boundary\n";
+$msg .= "Content-Type: text/plain; charset=\"iso-8859-1\"\n";
+$msg .= "Content-Transfer-Encoding: 8bit\n\n";
+$msg .= "Questa è una e-Mail di test inviata dal servizio Hosting di Aruba.it per la verifica del corretto funzionamento di PHP mail()function.
+
+Aruba.it";  // aggiungi il messaggio in formato text
+ 
+$msg .= "\n--$mail_boundary\n";
+$msg .= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
+$msg .= "Content-Transfer-Encoding: 8bit\n\n";
+$msg .= "Questa è una e-Mail di test inviata dal servizio Hosting di Aruba.it per la verifica del corretto funzionamento di PHP mail()function.
+
+Aruba.it";  // aggiungi il messaggio in formato HTML
+ 
+// Boundary di terminazione multipart/alternative
+$msg .= "\n--$mail_boundary--\n";
+ 
+// Imposta il Return-Path (funziona solo su hosting Windows)
+ini_set("sendmail_from", $sender);
+ 
+// Invia il messaggio, il quinto parametro "-f$sender" imposta il Return-Path su hosting Linux
+if (mail($to, $subject, $msg, $headers, "-f$sender")) { 
+    echo "Mail inviata correttamente!<br><br>Questo di seguito è il codice sorgente usato per l'invio della mail:<br><br>";
+    highlight_file($_SERVER["SCRIPT_FILENAME"]);
+    unlink($_SERVER["SCRIPT_FILENAME"]);
+} else { 
+    echo "<br><br>Recapito e-Mail fallito!";
+}
+
+?>
+© 2023 Aruba S.p.A. - P.IVA 01573850516 - REA: BG-434483- All rights reserved
