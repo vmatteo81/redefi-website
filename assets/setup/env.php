@@ -1,9 +1,9 @@
 <?php
 
-if (!defined('APP_NAME'))                       define('APP_NAME', 'ReCrypto');
-if (!defined('APP_ORGANIZATION'))               define('APP_ORGANIZATION', 'ReCrypto');
+if (!defined('APP_NAME'))                       define('APP_NAME', 'Redefi');
+if (!defined('APP_ORGANIZATION'))               define('APP_ORGANIZATION', 'Redefi');
 if (!defined('APP_OWNER'))                      define('APP_OWNER', 'vmatteo81');
-if (!defined('APP_DESCRIPTION'))                define('APP_DESCRIPTION', 'Real Estate Crypto');
+if (!defined('APP_DESCRIPTION'))                define('APP_DESCRIPTION', 'Redefi.eu');
 if (!defined('APP_WEBSITE'))                    define('APP_WEBSITE', 'www.redefi.eu');
 
 if (!defined('ALLOWED_INACTIVITY_TIME'))        define('ALLOWED_INACTIVITY_TIME', time()+1*60);
