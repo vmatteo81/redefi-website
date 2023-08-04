@@ -14,9 +14,9 @@
                 <a class="navbar-brand" href="../home">
 
                     <?php if (!isset($_SESSION['auth'])) { ?>
-                        <img src="../assets/images/logonotext.png" alt="" width="50" height="50" class="mr-3">
+                        <img src="../assets/images/logo.png" alt="" width="50" height="50" class="mr-3">
                     <?php } else { ?>
-                        <img src="../assets/images/logonotextwhite.png" alt="" width="50" height="50" class="mr-3">
+                        <img src="../assets/images/logo.png" alt="" width="50" height="50" class="mr-3">
                     <?php } ?>
 
                     <?php echo APP_NAME; ?>
