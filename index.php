@@ -7,6 +7,6 @@ if (isset($_SESSION['auth'])) {
 }
 else {
 
-    header("Location: login");
+    header("Location: welcome");
     exit();
 }
