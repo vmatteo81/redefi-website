@@ -34,6 +34,7 @@ check_remember_me();
     <!-- Custom styles -->
     <link rel="stylesheet" href="../assets/css/app.css">
     <link rel="stylesheet" href="custom.css" >
+    <script src="https://kit.fontawesome.com/21c26caa1a.js" crossorigin="anonymous"></script>
 
 </head>
 

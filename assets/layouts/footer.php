@@ -45,15 +45,12 @@
                             <i class="fab fa-linkedin"></i>
                         </a>
                     </div>
-                    <a class="btn btn-default" href="mailto:saad01.1999@gmail.com" target="_blank">Email Me</a>
+                    <a class="btn btn-default" href="mailto:support@redefi.eu" target="_blank">Support</a>
                 </div>
             </div>
         </div>
         <div class="footer-copyright">
-            <p>
-                <a href="https://github.com/msaad1999/PHP-Login-System" target="_blank">PHP Login System</a> |  
-                <a href="https://github.com/msaad1999" target="_blank">msaad1999</a> | 
-                <a href="https://github.com/msaad1999/PHP-Login-System/blob/master/LICENSE" target="_blank">MIT License</a>
+            <p> © 2023 Redefi.eu - All rights reserved
             </p>
         </div>
     </footer>

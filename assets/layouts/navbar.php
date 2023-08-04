@@ -37,12 +37,12 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="../welcome">Welcome</a>
-                        </li>
 
                         <?php if (!isset($_SESSION['auth'])) { ?>
 
+                            <li class="nav-item">
+                                <a class="nav-link" href="../welcome">Welcome</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="../contact">Contact Us</a>
                             </li>
@@ -56,13 +56,16 @@
                             </li>
 
                         <?php } else { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../home">Home</a>
+                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="../kyc">My Kyc</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="../wallets">My Wallets</a>
+                                <a class="nav-link" href="../wallets">Properties</a>
                             </li>
 
                             <li class="nav-item">
