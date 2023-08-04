@@ -14,3 +14,4 @@ jobs:
         server: ftp.redefi.eu
         username: 1292585@aruba.it
         password: 5R4kDM_644uzknU
+        server-dir: www.redefi.eu
