@@ -26,7 +26,7 @@ check_remember_me();
     <meta name="author" content="<?php echo APP_OWNER;  ?>">
 
     <title><?php echo TITLE . ' | ' . APP_NAME; ?></title>
-    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
 
     <link rel="stylesheet" href="../assets/vendor/bootstrap-4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/vendor/fontawesome-5.12.0/css/all.min.css">
