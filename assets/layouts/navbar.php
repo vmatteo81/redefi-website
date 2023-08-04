@@ -65,7 +65,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="../wallets">Properties</a>
+                                <a class="nav-link" href="../wallets">Real-Estate</a>
                             </li>
 
                             <li class="nav-item">
