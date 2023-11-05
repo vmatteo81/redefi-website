@@ -1,0 +1,62 @@
+/* Stile di base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+/* Stile per il campo email */
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Stile per il pulsante Invia */
+input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Regola media per dispositivi di larghezza inferiore a 600px (ad esempio, smartphone) */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    input[type="email"] {
+        margin-bottom: 5px;
+    }
+}
+
+h1 {text-align: center;}
+p {text-align: center;}
+div {text-align: center; max-width:800px; margin: 0 auto;}
+
+.image-panel {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.image-panel img {
+    max-width: 100%;
+    height: auto;
+    margin: 5px;
+}
+
+.image-panel img:hover {
+    transform: scale(4); /* Ingrandiamo l'immagine del 20% al passaggio del mouse */
+}
